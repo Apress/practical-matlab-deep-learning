@@ -1,4 +1,4 @@
-%% Read binary from the IMU
+%% Script to read binary from the IMU
 
 % Find available Bluetooth devices
 btInfo = instrhwinfo('Bluetooth')
@@ -14,11 +14,21 @@ b = Bluetooth(btInfo.RemoteIDs{1}, 1);
 fopen(b);
 
 % Get a data structure
-for k = 1:3
-  a = fread(b,91);
-  d = DataFromIMU( a );
-  [k d.gyro'  d.accel' d.quat']
+tic
+t = 0;
+for k = 1:100
+  a   = fread(b,91);
+  d   = DataFromIMU( a );
+  fprintf('%12.2f [%8.1e %8.1e %8.1e] [%8.1e %8.1e %8.1e] [%8.1f %8.1f %8.1f %8.1f]\n',t,d.gyro,d.accel,d.quat);
+  t = t + toc;
+  tic
 end
 
 % Disconnect the object from the Bluetooth device
 fclose(b);
+
+
+%% Copyright
+%   Copyright (c) 2019 Princeton Satellite Systems, Inc.
+%   All rights reserved.
+

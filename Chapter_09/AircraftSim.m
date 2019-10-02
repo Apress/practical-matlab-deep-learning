@@ -1,4 +1,4 @@
-%% Simulate a Gulfstream 350 in a banked turn
+%% Script to simulate a Gulfstream 350 in a banked turn
 
 n   = 500;
 dT  = 1;
@@ -53,3 +53,6 @@ PlotSet( t, xPlot(7:11,:), 'x label', tL, 'y label', yL(7:11),...
 PlotSet( xPlot(4,:), xPlot(5,:), 'x label', yL{4}, 'y label', yL{5},...
   'figure title', 'Planar Trajectory' );
 
+%% Copyright
+%   Copyright (c) 2019 Princeton Satellite Systems, Inc.
+%   All rights reserved.

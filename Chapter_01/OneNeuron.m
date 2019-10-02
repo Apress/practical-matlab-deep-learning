@@ -5,11 +5,11 @@
 % PlotSet
 
 %% Look at the activation functions
-q       = linspace(-4,4);
-v1      = tanh(q);
-v2      = 2./(1+exp(-q)) - 1;
+y       = linspace(-4,4);
+z1      = tanh(y);
+z2      = 2./(1+exp(-y)) - 1;
 
-PlotSet(q,[v1;v2;q],'x label','Input', 'y label',...
+PlotSet(y,[z1;z2;y],'x label','Input', 'y label',...
   'Output', 'figure title','Activation Functions','plot title', 'Activation Functions',...
   'plot set',{[1 2 3]},'legend',{{'Tanh','Exp','Linear'}});
 
@@ -28,3 +28,8 @@ z = tanh(thetaN);
 PlotSet(tOut,[truth;thetaN;z],'x label','Time (s)', 'y label',...
   'Next angle', 'figure title','One neuron','plot title', 'One neuron',...
   'plot set',{[1 2 3]},'legend',{{'True','Estimate','Neuron'}});
+
+
+%% Copyright
+%   Copyright (c) 2019 Princeton Satellite Systems, Inc.
+%   All rights reserved.

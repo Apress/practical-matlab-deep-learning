@@ -115,3 +115,8 @@ for k = 1:length(a)
   q       = [cos(a(k));0;0;sin(a(k))];
   QuaternionVisualization( 'update', q );
 end
+
+
+%% Copyright
+%   Copyright (c) 2019 Princeton Satellite Systems, Inc.
+%   All rights reserved.

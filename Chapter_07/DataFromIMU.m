@@ -1,4 +1,4 @@
-%% Extract data from the IMU binary
+%% DATAFROMIMU Extract data from the IMU binary
 %% Form
 %  d = DataFromIMU( a )
 %
@@ -51,4 +51,7 @@ function r = BytesToFloat( x )
   
 r = typecast(uint8(x),'single');
 
+%% Copyright
+%   Copyright (c) 2019 Princeton Satellite Systems, Inc.
+%   All rights reserved.
 

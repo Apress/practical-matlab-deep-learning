@@ -45,3 +45,8 @@ fprintf('Output layer weights %6.2f %6.2f\n',net.LW{2,1}(1,:));
 
 fprintf('Hidden layer activation function %s\n',net.layers{1}.transferFcn);
 fprintf('Output layer activation function %s\n',net.layers{2}.transferFcn);
+
+%% Copyright
+%   Copyright (c) 2019 Princeton Satellite Systems, Inc.
+%   All rights reserved.
+

@@ -12,12 +12,11 @@
 %% Outputs
 %   h                 Handle to the figure
 
-%% Copyright
-%   Copyright (c) 2016 Princeton Satellite Systems, Inc. 
-%   All rights reserved.
-
 function h = NewFigure( x, varargin )
 
 h = figure(varargin{:});
 set(h,'Name',x);
 
+%% Copyright
+%   Copyright (c) 2019 Princeton Satellite Systems, Inc. 
+%   All rights reserved.

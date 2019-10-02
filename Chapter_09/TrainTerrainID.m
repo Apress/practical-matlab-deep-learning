@@ -2,8 +2,9 @@
 
 net = feedforwardnet(2); 
 
-nPixels   = 672;
-wTerrain	= 222;
+% For use by TerrainCamera
+nPixels   = 672; % Dimensions of base image
+wTerrain	= 222; % x dimension of the image
 
 % Create training pairs
 h = NewFigure('Earth Segment');
@@ -39,3 +40,7 @@ PlotSet(1:nS,rGB,'x label','Image','y label',{'r' 'b' 'g'});
 
 save TerrainNet net
 
+
+%% Copyright
+%   Copyright (c) 2019 Princeton Satellite Systems, Inc.
+%   All rights reserved.

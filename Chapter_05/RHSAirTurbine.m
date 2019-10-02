@@ -20,9 +20,6 @@
 % Gas Turbine Engines." MIT PhD Thesis, Department of Aeronautics and
 % Astronautics, 1981.
 
-%% Copyright
-% Copyright (c) 2015 Princeton Satellite Systems, Inc.
-% All rights reserved.
 
 function xDot = RHSAirTurbine( ~, x, d )	
 
@@ -46,3 +43,6 @@ end
 % Derivative
 xDot = d.a*x + d.b*d.u;
   
+%% Copyright
+% Copyright (c) 2015 Princeton Satellite Systems, Inc.
+% All rights reserved.

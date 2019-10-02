@@ -1,4 +1,4 @@
-%% XOR Exclusive or neural net
+%% XORB Implement 'Exclusive Or' neural net
 % Uses the logistic function as the activation function
 %% Form
 %  c = XORB(a,b,w)
@@ -46,3 +46,6 @@ for k = 1:4
 end
 
  
+%% Copyright
+%   Copyright (c) 2019 Princeton Satellite Systems, Inc.
+%   All rights reserved.

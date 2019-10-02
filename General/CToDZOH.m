@@ -58,5 +58,10 @@ b       = [0;1]
 f
 g
 
+%% Copyright
+% Copyright (c) 2019 Princeton Satellite Systems, Inc.
+% All rights reserved.
+
+
 
 

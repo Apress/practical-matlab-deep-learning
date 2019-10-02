@@ -1,11 +1,8 @@
-
-%% Disturbance in a Tokamak plasma due to edge localized modes (ELMs). 
+%% ELM Disturbance in a Tokamak plasma due to edge localized modes (ELMs). 
 % These disturbances repeat. Thus, every tau3, set t = 0.
-%--------------------------------------------------------------------------
-%   Form:
+%% Form:
 %   eLM = ELM( tau1, tau2, k, t )
-%--------------------------------------------------------------------------
-%
+%%
 %% Inputs
 %   tau1	(1,1) Time constant 1
 %   tau2	(1,1) Time constant 2
@@ -15,12 +12,10 @@
 %% Outputs
 %   d    	(2,:) ELM and its derivative
 %
-%--------------------------------------------------------------------------
-%   Reference: Scibile, L. and B. Kouvaritakis (2001.) "A Discrete Adaptive
-%              Near-Time Optimum Control for the Plasma Vertical Position 
-%              in a Tokamak." IEEE Transactions on Control System 
-%              Technology. Vol. 9, No. 1, January 2001.
-%--------------------------------------------------------------------------
+%% Reference: 
+% Scibile, L. and B. Kouvaritakis (2001.) "A Discrete Adaptive Near-Time Optimum
+% Control for the Plasma Vertical Position in a Tokamak." IEEE Transactions on
+% Control System Technology. Vol. 9, No. 1, January 2001.
 
 function eLM = ELM( tau1, tau2, k, t )
 
@@ -45,3 +40,7 @@ else
   eLM = d;
 end
 
+
+%% Copyright
+%   Copyright (c) 2019 Princeton Satellite Systems, Inc.
+%   All rights reserved.

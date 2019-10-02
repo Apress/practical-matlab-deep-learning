@@ -14,10 +14,6 @@
 %% Outputs
 %   None
 
-%% Copyright
-%   Copyright (c) 2016 Princeton Satellite Systems, Inc.
-%   All rights reserved.
-
 function SaveStructure( g, fileName )
 
 % Create the file name
@@ -50,5 +46,10 @@ end
 
 % Save
 eval( m );
+
+
+%% Copyright
+% Copyright (c) 2019 Princeton Satellite Systems, Inc.
+% All rights reserved.
 
 

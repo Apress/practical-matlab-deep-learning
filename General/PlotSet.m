@@ -22,9 +22,6 @@
 %% Outputs
 %  h         (1,1)  Figure handle
 
-%% Copyright
-% Copyright (c) 2016 Princeton Satellite Systems, Inc.
-% All rights reserved.
 
 function h = PlotSet( x, y, varargin )
 
@@ -59,8 +56,6 @@ for k = 1:m
   plotSet{k} = k;
   leg{k} = {};
 end
-
-
 
 % Handle input parameters
 for k = 1:2:length(varargin)
@@ -174,5 +169,10 @@ disp('PlotSet: One x and two y rows')
 PlotSet( x, y, 'figure title', 'PlotSet Demo',...
     'plot set',{[2 3], 1},'legend',{{'A' 'B'},{}},'plot title',{'cos','sin'},'line width',2);
 
+
+
+%% Copyright
+% Copyright (c) 2016 Princeton Satellite Systems, Inc.
+% All rights reserved.
 
 

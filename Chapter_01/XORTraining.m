@@ -1,10 +1,10 @@
-%% XOR Training
-% Uses the logistic function as the activation function
+%% XORTRAINING Implements an XOR training function.
 %% Form
 %  w = XORTraining(a,b,c,w,n,eta)
 %
 %% Description
-% Implements an XOR training function.
+% Train the XOR net with back propagation derived for a tanh activation
+% function. Includes a demo with random initial weights.
 %
 %% Inputs
 %  a    (1,4) Input 1
@@ -16,6 +16,8 @@
 %
 %% Outputs
 %  w    (9,1)  Weights and biases
+%% See also
+% XOR
 
 function w = XORTraining(a,b,c,w,n,eta)
 
@@ -69,3 +71,7 @@ fprintf('    a     b   c\n');
 for k = 1:4
   fprintf('%5.0f %5.0f %5.2f\n',a(k),b(k),c(k));
 end
+
+%% Copyright
+%   Copyright (c) 2019 Princeton Satellite Systems, Inc.
+%   All rights reserved.

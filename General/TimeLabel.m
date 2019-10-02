@@ -14,10 +14,6 @@
 %  u         (1,:)  Units string Time = (units)
 %  s         (1,:)  Units string
 
-%% Copyright
-% Copyright (c) 2015 Princeton Satellite Systems, Inc.
-% All rights reserved.
-
 function [t, c, s] = TimeLabel( t )
 
 secInYear   = 365.25*86400;
@@ -47,3 +43,10 @@ else
   c = 'Time (sec)';
   s = 'sec';
 end
+
+
+
+%% Copyright
+% Copyright (c) 2015-2019 Princeton Satellite Systems, Inc.
+% All rights reserved.
+

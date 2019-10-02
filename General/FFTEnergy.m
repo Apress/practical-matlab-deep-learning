@@ -59,3 +59,8 @@ if( nargout == 0 )
   tL = sprintf('FFT Energy Plot: Resolution = %10.2e rad/sec',r);
 	PlotSet(w,log10(e),'x label','Frequency (rad/sec)','y label','Log(Energy)','figure title',tL,'plot title',tL,'plot type','xlog');
 end
+
+
+%% Copyright
+% Copyright (c) 2019 Princeton Satellite Systems, Inc.
+% All rights reserved.

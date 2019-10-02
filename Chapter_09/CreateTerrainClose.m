@@ -1,10 +1,8 @@
-%% Creates an image from 4 tiles
-%
-% Type CreateTerrainClose for a demo.
-
-%% Input
-
-%% Output
+%% CREATETERRAINCLOSE Creates an image from 4 tiles
+% Draws the image in the current figure
+%% Form
+%  CreateTerrainClose
+%% Input, Output
 % None
 
 function CreateTerrainClose
@@ -12,16 +10,17 @@ function CreateTerrainClose
 % Generate the file names
 imageSet  = {'grid1x1+3400-11800','grid1x1+3400-11900',...
              'grid1x1+3500-11800','grid1x1+3500-11900'};
-p         = [2 1 4 3 ];
+p = [2 1 4 3];
+
 % Assuming we are one directory above
 cd terrainclose
 
-im    = cell(1,4);
+im = cell(1,4);
 for k = 1:4
 	im{k} = flipud(imread([imageSet{k},'.jpg']));
 end
 
-del   = size(im{1},1);
+del = size(im{1},1);
 
 % Draw the images
 x     = 0;
@@ -41,3 +40,7 @@ axis off
 axis image
 
 cd ..
+
+%% Copyright
+%   Copyright (c) 2019 Princeton Satellite Systems, Inc.
+%   All rights reserved.

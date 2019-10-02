@@ -1,5 +1,4 @@
-	
-%% EquilibriumControls finds controls to maintain equilibrium.
+%% EQUILIBRIUMCONTROLS Finds controls to maintain equilibrium.
 % Type EquilibriumControls for a demo.
 %% Form
 %   d = EquilibriumControls( x, d )
@@ -11,6 +10,7 @@
 %% Outputs
 %   d     (.)   Data structure see RHSPointMassAircraft
 %
+
 function d = EquilibriumControls( x, d )
 
 if( nargin < 1 )
@@ -48,3 +48,6 @@ fprintf('Angle of attack %8.2f deg\n',d.alpha*180/pi);
 fprintf('Bank angle      %8.2f deg\n',d.phi*180/pi);
 fprintf('Turn radius     %8.2f km\n',r/1000);
   
+%% Copyright
+%   Copyright (c) 2019 Princeton Satellite Systems, Inc.
+%   All rights reserved.

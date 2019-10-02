@@ -42,9 +42,6 @@
 %% See also
 % DetectionFilter>CToDZOH
 
-%% Copyright
-% Copyright (c) 2015 Princeton Satellite Systems, Inc. 
-% All rights reserved.
 
 function d = DetectionFilter( action, varargin )
 
@@ -71,7 +68,7 @@ switch lower(action)
     y   = varargin{2};
     d   = varargin{3};
     r   = y - d.c*d.x;
-    d.x = d.a*d.x + +d.b*u + d.d*r;
+    d.x = d.a*d.x + d.b*u + d.d*r;
     d.r = r;
     
   case 'reset'

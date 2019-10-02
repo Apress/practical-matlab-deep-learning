@@ -1,20 +1,18 @@
-%% Models a camera
-%
+%% TERRAINCAMERA Models a camera taking a photo of terrain
 % Type TerrainCamera for a demo.
-
 %% Input
 % r       (3,1) Position with respect to the terrain center (m)
-% h       (1,1) Handle to image
-% n       (1,1) Pixels in the image
-% w       (1,1) x dimension of the image
+% h       (1,1) Handle to the figure with the terrain image
+% nBits 	(1,1) Pixels in the image from the camera
+% w       (1,1) x dimension of the base image 
 % nP      (1,2) Dimensions of base image
-
+%
 %% Output
 % d       (.)   Data structure
 %               .p (n,n,3) Pixel map
 %               .r (2,1) [x;y]
 
-function d = TerrainCamera( r, h, n, w, nP )
+function d = TerrainCamera( r, h, nBits, w, nP )
 
 % Demo
 if( nargin < 1 )
@@ -23,7 +21,7 @@ if( nargin < 1 )
 end
 
 if( nargin < 3 )
-  n = [];
+  nBits = [];
 end
 
 if( nargin < 4 )
@@ -31,23 +29,28 @@ if( nargin < 4 )
 end
 
 if( nargin < 5 )
-  nP = [672 672];
+  nP = 64;
 end
 
 if( isempty(w) )
-  w = 222;
+  w = 4000;
 end
 
-if( isempty(n) )
-  n = 16;
+if( isempty(nBits) )
+  nBits = 16;
 end
 
-xToPix  = nP(1)/w;
-cXY     = r(1:2)*xToPix;
-xLim    = floor([cXY(1) - n/2 cXY(1) + n/2] + nP(1)/2);
-yLim    = floor([cXY(2) - n/2 cXY(2) + n/2] + nP(2)/2);
+dW = w/nP;
+
+k  = floor(r(1)/dW) + nP/4 + 1;
+j  = floor((w/2-r(2))/dW) - nP/4 + 1;
+
+kR = k:(k-1 + nBits);
+kJ = j:(j-1 + nBits);
+
 [~,~,i] = getimage(h);
-d.p   	= i(xLim(1):xLim(2),yLim(1):yLim(2),:);
+
+d.p   	= i(kR,kJ,:);
 d.r     = r(1:2);
 
 if( nargout < 1 )
@@ -61,7 +64,7 @@ end
 function Demo
 
 h = NewFigure('Earth Segment');
-i = imread('TerrainClose.jpg');
+i = imread('TerrainClose64.jpg');
 image(i);
 grid
 
@@ -72,3 +75,6 @@ for k = 1:20
   pause( 0.1 );
 end
 
+%% Copyright
+%   Copyright (c) 2019 Princeton Satellite Systems, Inc.
+%   All rights reserved.

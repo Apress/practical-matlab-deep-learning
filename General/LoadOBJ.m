@@ -317,3 +317,10 @@ else
   k = k(1);
   v = str2num(t(1:(k-1))); %#ok<ST2NM>
 end
+
+
+
+%% Copyright
+% Copyright (c) 2016 Princeton Satellite Systems, Inc.
+% All rights reserved.
+

@@ -34,3 +34,8 @@ k4    = feval( Fun,	t+h,    x + h*k3,   varargin{:} );
 x     = x + h*(k1 + 2*(k2+k3) + k4)/6;
 
 
+
+%% Copyright
+% Copyright (c) 2019 Princeton Satellite Systems, Inc.
+% All rights reserved.
+

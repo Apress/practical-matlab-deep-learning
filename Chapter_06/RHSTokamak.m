@@ -1,29 +1,29 @@
-function [xDot,z] = RHSTokamak( x, ~, d )
-
-%% Simulates a model of the vertical position of a plasma in a Tokamak.
-%
+%% RHSTOKAMAK Simulates a model of the vertical position of a plasma in a Tokamak.
 %% Form:
 % [xDot,z] = RHSTokamak( x, t, d )
 %
 %% Inputs
-%   x   (2,1) State [iA;iV;v] 
+%   x   (3,1) State [iA;iV;v] [active coils;passive coils;delay state]
 %   t  	(1,1) Time (s)
 %   d  	(1,1) Structure
-%             .aS  	(1,1) State matrix
-%             .bS   (1,1) Input matrix
-%             .cS   (1,1) Output matrix
-%             .dS   (1,1) Feed through matrix
+%             .aS  	(2,2) State matrix
+%             .bS   (2,3) Input matrix
+%             .cS   (1,2) Output matrix
+%             .dS   (1,2) Feed through matrix
 %             .tauT	(1,1) Input time constant (s)
 %             .vC  	(1,1) Control voltage
-%           	.eLM	(1,1) Edge limited mode disturbance
+%           	.eLM	(1,1) Edge localized mode disturbance
 %             .iP   (1,1) Plasma current (A)
 %
 %% Outputs
 %   xDot	(3,1) State derivative d[iA;iV;v]/dt
+%   z     (1,1) Plasma position (m)
 %
 %% Reference:  
 % Scibile, L. "Non-linear control of the plasma vertical
 % position in a tokamak," Ph.D Thesis, University of Oxford, 1997.
+
+function [xDot,z] = RHSTokamak( x, ~, d )
 
 if( nargin < 3 )
   if( nargin == 1 )
@@ -35,11 +35,10 @@ if( nargin < 3 )
   return;
 end
 
-v    = x(3);
-vDot = (d.vC - v)/d.tauT;
-u    = [v;d.eLM];
+u    = [d.vC;d.eLM];
+vDot = (x(3) - d.vC)/d.tauT;
 xDot = [d.aS*x(1:2) + d.bS*u;vDot];
-z    = (d.cS*x(1:2) + d.dS*u)/d.iP;
+z    = d.cS*x(1:2) + d.dS*u;
 
 function d = DefaultDataStructure
 
@@ -56,7 +55,6 @@ kAV   = d.lAV^2/(d.lAA*d.lVV);
 oMKAV = 1 - kAV;
 kA    = 1/(d.lAA*oMKAV);
 mVP   = d.aPP*d.lVV/d.lVP^2;
-mAP   = d.aPP*d.lAA/d.lAP^2;
 oMMVP = 1 - mVP;
 
 if( mVP >= 1 )
@@ -68,22 +66,19 @@ if( kAV >= 1 )
 end
 
 d.aS    =  (1/oMKAV)*[ -d.rAA/d.lAA d.rVV*kAV/d.lAV;...
-                    d.rAA*kAV/d.lAV -(d.rVV/d.lVV)*(kAV - mVP)/oMMVP];
-d.bS    =  [ kA 0 0; -kAV/(d.lAV*oMKAV) 1/(d.lVP*oMMVP) 0];
-d.cS    = -[d.lAP d.lVP]/d.aPP;
-d.dS    =  [0 0 1]/d.aPP;
+                        d.rAA*kAV/d.lAV -(d.rVV/d.lVV)*(kAV - mVP)/oMMVP];
+d.bS    =  [kA 0 0;kAV/(d.lAV*(1-kAV)) 1/(d.lVP*oMMVP) 0];
+d.cS    = -[d.lAP d.lVP]/d.aPP/d.iP;
+d.dS    =  [0 0 1]/d.aPP/d.iP;
+eAS     = eig(d.aS);
 
-tV      = d.lVV*oMKAV/d.rVV;
-a0      = (mVP-kAV)/oMMVP/tV;
-a1      = d.rAA/d.lAA/oMKAV;
-alpha   = a0 + kAV/tV;
+disp('Eigenvalues')
+fprintf('\n Mode 1 %12.2f\n Mode 2 %12.2f\n',eAS);
 
-disp('For gamma_p = 115, gamma_n = 2.67 k1 = 2.6, k2 = 2.23 b1 = -114.46, b0 = -570.01');
-roots([1 -(a0-a1) -alpha*a1])
-eig(d.aS)
-k1 = d.lVP*d.lAV*kA*alpha/(d.lVV*d.aPP)/d.iP
-k2 = (mVP-2)/(mVP-1)/d.aPP/d.iP
-b1 = ((mVP-2)*(a1-a0) - alpha)/(mVP-2)
-b0 = a1*alpha*(1-mVP)/(mVP-2)
-aPP= d.aPP
+
+%% Copyright
+%   Copyright (c) 2019 Princeton Satellite Systems, Inc.
+%   All rights reserved.
+
+
 

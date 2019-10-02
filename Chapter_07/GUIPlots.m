@@ -1,11 +1,7 @@
 %% GUIPLOTS Draw data in real time
-%
+% Type GUIPlots for a demo.
 %% Form:
 %   g = GUIPlots( action, y, t, g )
-%
-%% Description
-%
-%   Type GUIPlots for a demo.
 %
 %% Inputs
 %   action      (1,:)    Action 'initialize' 'update'
@@ -34,25 +30,17 @@ end
 
 switch( lower(action) )
   case 'initialize'
-    g = Initialize( g, y, t );        
-          
-	case 'update'
+    g = Initialize( g );
+  
+  case 'update'
     g = Update( g, y, t );
-
+   
 end
 
 %% GUIPlots>Initialize
-function g = Initialize( g, y, t )
+function g = Initialize( g )
 
 lY = length(g.yLabel);
-if( isempty( y ) )
-  y = zeros( lY,1);
-end
-if( isempty( t ) )
-  t = 0;
-end
-g.yLast = y;
-g.tLast = t;
    
 % Create tLim if it does not exist
 if( ~isfield(g, 'tLim' ) )
@@ -68,21 +56,15 @@ end
 
 % Create the plots
 lP = length(g.yLabel);
-y  = g.pos(2);
+y  = g.pos(2); % The starting y position
 for k = 1:lP
   g.h(k) = subplot(lP,1,k);
   set(g.h(k),'position',[g.pos(1) y g.pos(3) g.pos(4)]);
   y = y - 1.4*g.pos(4);
   g.hPlot(k) = plot(0,0);
   g.hAxes(k) = gca;
-  if( g.yLim(k,1) ~= g.yLim(k,2) )
-    yLim        = g.yLim(k,:);
-  else
-    yLim        = [-1 1];
-    g.yLim(k,:) = yLim;
-  end
   g.yWidth(k) = (g.yLim(k,2) - g.yLim(k,1))/2;
-  set(g.hAxes(k),'nextplot','add','xlim',g.tLim,'ylim',yLim);
+  set(g.hAxes(k),'nextplot','add','xlim',g.tLim);
   ylabel( char(g.yLabel{k}) )
   grid on
 end
@@ -103,33 +85,21 @@ end
 lP = length(g.yLabel);
 for k = 1:lP
   subplot(g.h(k));
-  
-  % See if the y limits have been exceeded
-  if( y(k) > g.yLim(k,2) )
-    g.yLim(k,2) = g.yLim(k,2) + g.yWidth(k);
-    updateAxes  = true;
-  elseif( y(k) < g.yLim(k,1) )
-    g.yLim(k,1) = g.yLim(k,1) - g.yWidth(k);
-    updateAxes  = true;
-  end
-  
-  % Update the axes if the limits are changed
+  yD = get(g.hPlot(k),'ydata');
+  xD = get(g.hPlot(k),'xdata');
   if( updateAxes )
-    set( gca, 'xLim', g.tLim      );
-    set( gca, 'yLim', g.yLim(k,:) );
-    plot( [g.tLast t], [g.yLast(k) y(k)],g.color,'linewidth',g.width); 
+    set( gca, 'xLim', g.tLim );
+    set( g.hPlot(k), 'xdata',[xD t],'ydata',[yD y(k)]); 
   else
-    plot( [g.tLast t], [g.yLast(k) y(k)],g.color,'linewidth',g.width );
+    set( g.hPlot(k), 'xdata',[xD t],'ydata',[yD y(k)] ); 
   end
-end
 
-g.yLast = y;
-g.tLast = t;
+end
 
 %% GUIPlots>Demo
 function Demo
 
-g.yLabel = {'x' 'y' 'z' 'u' 'v' 'w'};
+g.yLabel = {'x' 'y' 'z' 'x_1' 'y_1' 'z_1'};
 g.tLabel = 'Time (sec)';
 g.tLim   = [0 100];
 g.pos    = [0.100    0.88    0.8    0.10];
@@ -142,8 +112,21 @@ set(g.hFig, 'NumberTitle','off' );
 g        = GUIPlots( 'initialize', [], [], g );
 
 for k = 1:200
-  y = cos((k/100)*ones(6,1));
-  g = GUIPlots( 'update', y, k, g );
+  y = 0.1*[cos((k/100))-0.05;sin(k/100)];
+  g = GUIPlots( 'update', [y;y.^2;2*y], k, g );
   pause(0.1)
 end
+
+g        = GUIPlots( 'initialize', [], [], g );
+
+for k = 1:200
+  y = 0.1*[cos((k/100))-0.05;sin(k/100)];
+  g = GUIPlots( 'update', [y;y.^2;2*y], k, g );
+  pause(0.1)
+end
+
+
+%% Copyright
+%   Copyright (c) 2019 Princeton Satellite Systems, Inc.
+%   All rights reserved.
 

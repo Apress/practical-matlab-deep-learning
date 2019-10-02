@@ -1,14 +1,14 @@
-%% Finds 9 folders given a latitude and longitude
-% The range is -60 to +60 in latitude. Draws a 3x3 tile map. 
-% You should call NewFigure first. 
-% You must be one directory above terrain for this to work.
+%% CREATETERRAIN Finds 9 folders given a latitude and longitude
+% The range is -60 to +60 in latitude. Draws a 3x3 tile map. You should call
+% NewFigure first. You must be one directory above the terrain directory for
+% this to work.
 %
 % Type CreateTerrain for a demo.
-
+%
 %% Input
-% lat (1,1) Latitude (deg)
-% lon (1,1) Longitude (deg)
-
+%   lat (1,1) Latitude (deg)
+%   lon (1,1) Longitude (deg)
+%
 %% Output
 % None
 
@@ -140,3 +140,7 @@ function Demo
 NewFigure('EarthSegment');
 CreateTerrain( 30,60,1 )
 
+
+%% Copyright
+%   Copyright (c) 2019 Princeton Satellite Systems, Inc.
+%   All rights reserved.

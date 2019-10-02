@@ -1,5 +1,4 @@
-	
-%% RHSPointMassAircraft Right hand side for a point mass airrcraft
+%% RHSPOINTMASSAIRCRAFT Right hand side for a point mass airrcraft
 %% Form
 %   [xDot,lift,drag] = RHSPointMassAircraft( ~, x, d )
 %%
@@ -58,3 +57,6 @@ function rho = Density( h )
     
 rho = 1.225*exp(-0.0817*h^1.15);
   
+%% Copyright
+%   Copyright (c) 2019 Princeton Satellite Systems, Inc.
+%   All rights reserved.

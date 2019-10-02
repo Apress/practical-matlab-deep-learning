@@ -20,5 +20,9 @@ d(j) = 1;
 %% Plot the results
 PlotSet(t,[s;d],'x label','Hour', 'y label',...
   {'Solar Flux', 'Day/Night'}, 'figure title','Daylight Detector',...
-  'plot title', 'Daylight Detector');
+  'plot title', {'Flux Model','Perceptron Output'});
 set([subplot(2,1,1) subplot(2,1,2)],'xlim',[0 24],'xtick',[0 6 12 18 24]);
+
+%% Copyright
+%   Copyright (c) 2019 Princeton Satellite Systems, Inc.
+%   All rights reserved.

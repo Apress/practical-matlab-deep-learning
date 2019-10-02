@@ -96,3 +96,8 @@ a = linspace(0,4*pi);
 x = [sin(a);sin(a);a];
 
 DrawComponents( 'update', g, h, x );
+
+
+%% Copyright
+% Copyright (c) 2019 Princeton Satellite Systems, Inc.
+% All rights reserved.
