@@ -13,7 +13,7 @@
 im    = flipud(imread('TerrainClose64.jpg')); % Read in the image
 wIm   = 4000; % m
 nBits = 16;
-dN    = 1; % The delta bits is 2
+dN    = 1; % The delta bits is 1
 nBM1  = nBits-1;
 [n,m] = size(im); % Size of the image
 nI    = (n-nBits)/dN + 1; % The number of images down one side
@@ -34,53 +34,89 @@ end
 cd TerrainImages
 delete *.jpg % Starting from scratch so delete existing images
 
-i   = 1;
-l   = 1;
-t   = zeros(1,nI*nI*nN); % The label for each image
-x   = x0; % Initial location
-y   = y0; % Initial location
-r   = zeros(2,nI*nI); % The x and y coordinates of each image
-id  = zeros(1,nI*nI);
-iR  = 1;
-rgbs = [];
+kCheck = randperm(nI-1,2);
+
+i     = 1;
+l     = 1;
+t     = zeros(1,nI*nI*nN); % The label for each image
+x     = x0; % Initial location
+y     = y0; % Initial location
+r     = zeros(2,nI*nI); % The x and y coordinates of each image
+id    = zeros(1,nI*nI);
+iMI   = zeros(1,nI*nI);
+%rgbs  = [];
+hW    = waitbar(0,'Processing Terrain Images');
+
 for k = 1:nI
-  disp(k)
+  waitbar(k/nI,hW);
   kR = dN*(k-1)+1:dN*(k-1) + nBits;
   for j = 1:nI
-    kJ = dN*(j-1)+1:dN*(j-1) + nBits;
-    thisImg = im(kR,kJ,:);
-    rgbs(end+1,:) = [mean(mean(thisImg(:,:,1))) mean(mean(thisImg(:,:,2))) mean(mean(thisImg(:,:,3)))];
+    kJ            = dN*(j-1)+1:dN*(j-1) + nBits;
+    thisImg       = im(kR,kJ,:);
+    %rgbs(end+1,:) = [mean(mean(thisImg(:,:,1))) mean(mean(thisImg(:,:,2))) mean(mean(thisImg(:,:,3)))];
     for p = 1:nN
       s       = im(kR,kJ,:) + uint8(floor(sig*rand(nBits,nBits,3)));
-      q       = s>256;
+      q       = s > 256;
       s(q)    = 256;
-      q       = s <0;
+      q       = s < 0;
       s(q)    = 0;
       imwrite(s,sprintf('TerrainImage%d.jpg',i+kAdd));
       t(i)    = l;
       i       = i + 1;
-    end   
-    r(:,iR)  = [x;y];
-    id(iR)   = iR;
-    iR = iR + 1;
-    l = l + 1;
-    y = y - dW;
+    end   % number of images at each location
+    if (k==kCheck(1) && j==kCheck(2))
+      imgCheck = thisImg;
+      rCheck = [x;y];
+    end
+    r(:,l)	= [x;y];
+    id(l)   = l;
+    if( l == 1913  )
+      l
+      k
+      j
+      kR
+      kJ
+      r(:,l)
+    end
+    iMI(l)	= i + kAdd - 1;
+    l       = l + 1;
+    y       = y - dW;
   end
   x = x + dW;
   y = y0;
 end
+close(hW)
 
 % Save the labels
 save('Label','t');
 cd ..
-save('loc','r','id','id');
+save('loc','r','id','id','im','iMI');
 
 % Just confirm the image locations look right
 figure('name','Image Locations')
 plot(r(1,:),r(2,:),'.')
+for j = 1:nI*nI
+  text(r(1,j),r(2,j),sprintf('%d',id(j)),'fontsize',6);
+end
 xlabel('x'); ylabel('y');
 title('Image Locations')
 axis equal; grid on;
+
+% check the test image location
+figure('Name','TestImage')
+subplot(1,2,1)
+image(im); 
+axis equal; hold on;
+kTest = kCheck([2 1]); % reverse order
+% draw a box where the image should be
+plot(kTest(1)+[0 nBits],kTest(2)*[1 1],'c','linewidth',3)
+plot(kTest(1)+[0 nBits],kTest(2)*[1 1]+nBits,'c','linewidth',3)
+plot(kTest(1)*[1 1],kTest(2)+[0 nBits],'c','linewidth',3)
+plot(kTest(1)*[1 1]+nBits,kTest(2)+[0 nBits],'c','linewidth',3)
+subplot(1,2,2)
+image(imgCheck)
+axis equal
+
 
 %% Copyright
 %   Copyright (c) 2019 Princeton Satellite Systems, Inc.

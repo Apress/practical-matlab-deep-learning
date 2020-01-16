@@ -1,7 +1,7 @@
 %% CREATETERRAIN Finds 9 folders given a latitude and longitude
 % The range is -60 to +60 in latitude. Draws a 3x3 tile map. You should call
 % NewFigure first. You must be one directory above the terrain directory for
-% this to work.
+% this to work. We only included the folders for this demo.
 %
 % Type CreateTerrain for a demo.
 %
@@ -19,12 +19,12 @@ if( nargin < 1 )
   Demo;
   return
 end
-
 d           = dir('terrain');
-latA        = zeros(1,468);
-lonA        = zeros(1,468);
-folderName  = cell(1,468);
-for k = 1:468
+n           = length(d)-3;
+latA        = zeros(1,n);
+lonA        = zeros(1,n);
+folderName  = cell(1,n);
+for k = 1:n
   q               = d(k).name;
   folderName{k}   = q;
   if( q(2) == '0' )

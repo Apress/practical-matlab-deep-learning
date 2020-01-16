@@ -42,8 +42,11 @@ end
 
 dW = w/nP;
 
-k  = floor(r(1)/dW) + nP/4 + 1;
-j  = floor((w/2-r(2))/dW) - nP/4 + 1;
+x0 = -w/2 + (nBits/2)*dW;
+y0 =  w/2 - (nBits/2)*dW;
+k  = floor((r(1) - x0)/dW) + 1;
+j  = floor((y0 - r(2))/dW) + 1;
+
 
 kR = k:(k-1 + nBits);
 kJ = j:(j-1 + nBits);

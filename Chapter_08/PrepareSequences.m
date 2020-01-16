@@ -1,12 +1,12 @@
 %% Script to create all the sentences and labels
-% Reads the database and saves the Sentences mat-file.
+% Reads the database and saves the Sentences mat-file. Takes a few seconds.
 %% See also
 % ReadDatabase, extractBefore, extractAfter, MapToNumbers
 
 [s,u,v,a] = ReadDatabase;
 
-% Whatever you want in the training
-nSentences = 100; %length(s);
+% Whatever you want in the training, ex. 100, length(s) for all.
+nSentences = length(s);
 
 i = 1;
 c = zeros(size(v,2)*nSentences,1);
@@ -49,9 +49,7 @@ for k = 1:10
 end
 
 %% Save the numbers and category in a mat-file
-
 save('Sentences','nZ', 'c');
-
 
 
 %% Copyright

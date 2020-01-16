@@ -19,7 +19,7 @@ end
 
 elTrain     = s.el(kTrain);
 yTrain      = [elTrain.a;elTrain.e];
-yTrain(1,:) = yTrain(1,:)/aMean;
+yTrain(1,:) = yTrain(1,:)/aMean; % Normalize the data
 kTest       = setdiff(1:n,kTrain);
 sTest       = s.data(kTest);
 nTest       = n-nTrain;

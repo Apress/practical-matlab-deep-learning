@@ -11,9 +11,11 @@ i = flipud(imread('TerrainClose64.jpg'));
 image(i)
 
 %% Get the camera image
-k     = 34;
+k     = 1913;
 rI    = load('Loc');
-im    = TerrainCamera(rI.r(:,k), h, 32 );
-iD    = rI.iD(k)
+
+rr    = rI.r(:,k)
+im    = TerrainCamera(rI.r(:,k), h, 16 );
+iD    = rI.id(k)
 nN    = load('TerrainNet');
 l     = classify(nN.terrainNet,im.p)

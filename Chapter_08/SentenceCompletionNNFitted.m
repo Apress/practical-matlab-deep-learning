@@ -4,6 +4,8 @@
 % PrepareSequences, sequenceInputLayer, bilstmLayer, fullyConnectedLayer,
 % softmaxLayer, classificationLayer, classify
 
+clear all
+
 %% Load the data
 s = load('Sentences');
 n = length(s.c);        % number of sentences
@@ -20,16 +22,18 @@ end
 
 %% Set up the network
 numFeatures = 1;
-numHiddenUnits = 200;
-
 numClasses = 2;
 
-% Good results with validation frequency of 10 and 200 hidden units
+% 
 layers = [ ...
     sequenceInputLayer(numFeatures)
-    bilstmLayer(numHiddenUnits,'OutputMode','sequence')
-    dropoutLayer(0.2)
-    bilstmLayer(numHiddenUnits,'OutputMode','last')
+    bilstmLayer(80,'OutputMode','sequence')
+    fullyConnectedLayer(numClasses)
+    dropoutLayer(0.4)
+    bilstmLayer(60,'OutputMode','sequence')
+    fullyConnectedLayer(numClasses)
+    dropoutLayer(0.2) % 0.2 was pretty good
+    bilstmLayer(20,'OutputMode','last')
     fullyConnectedLayer(numClasses)
     softmaxLayer
     classificationLayer];
@@ -40,13 +44,13 @@ kTrain      = randperm(n,0.85*n);
 xTrain      = s.nZ(kTrain);             % sentence indices, in order
 yTrain      = categorical(s.c(kTrain)); % complete or not?
 
-% Test this network - results show overfitting
+% Test this network
 kTest       = setdiff(1:n,kTrain);
 xTest       = s.nZ(kTest);
 yTest       = categorical(s.c(kTest));
   
 options = trainingOptions('adam', ...
-    'MaxEpochs',240, ...
+    'MaxEpochs',60, ...
     'GradientThreshold',1, ...
     'ValidationData',{xTest,yTest}, ...
     'ValidationFrequency',10, ...

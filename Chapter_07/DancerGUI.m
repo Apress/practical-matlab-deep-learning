@@ -131,7 +131,7 @@ while(1)
   end
 end
 
-%% DancerGUI>DrawButtons
+%% DancerGUI>DrawGUI
 function DrawGUI
   
   % Plots

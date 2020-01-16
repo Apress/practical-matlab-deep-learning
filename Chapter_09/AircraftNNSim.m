@@ -1,6 +1,6 @@
 %% Simulate a Gulfstream 350 in a banked turn
 
-n       = 400;
+n       = 500;
 dT      = 0.1;
 rTD     = 180/pi;
 mToKm   =	0.001;
@@ -23,20 +23,27 @@ xPlot = zeros(length(x)+3,n);
 
 % Put the image in a figure so that we can read it
 h = NewFigure('Earth Segment');
-i = imread('TerrainClose64.jpg');
+i = flipud(imread('TerrainClose64.jpg'));
 image(i);
 axis image
 
 NewFigure('Camera');
 
 for k = 1:n
-    
+
   % Get the image for the neural net
   im          = TerrainCamera( x(4:5), h, nBits );
+  subplot(1,2,1)
+  image(im.p)
+  axis image
   
   % Run the neural net
   l           = classify(nN.terrainNet,im.p);
-
+  subplot(1,2,2)
+  q = imread(sprintf('TerrainImages/TerrainImage%d.jpg',rI.iMI(l)));
+  image(q);
+  axis image
+  
   % Plot storage
   i           = int32(l);
   xPlot(:,k)  = [x;rI.r(:,i);i];
